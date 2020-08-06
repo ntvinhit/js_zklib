@@ -134,6 +134,11 @@ export class ZKLib {
      */
     enableDevice(cb?: CallbackError): void;
     disableDevice(cb?: CallbackError): void;
+    getFreeSizes(cb?: DefaultCallback<{
+        users: number,
+        logs: number,
+        capacity: number
+    }>): void;
 }
 
 export default ZKLib;
