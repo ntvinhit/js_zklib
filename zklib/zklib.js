@@ -1,5 +1,5 @@
 const dgram = require('react-native-udp');
-var net = require('react-native-tcp');
+var net = require('react-native-tcp-socket').default;
 
 const mixin = require('./mixin');
 const attParserLegacy = require('./att_parser_legacy');
@@ -147,7 +147,10 @@ class ZKLib {
      * @param {(error?: Error) => void} [cb]
      */
     createTcpSocket(cb) {
-        const socket = new net.Socket();
+        const socket = net.createConnection({
+            port: this.port,
+            host: this.ip
+        });
 
         socket.once('error', err => {
             socket.end();
@@ -162,11 +165,6 @@ class ZKLib {
         if (this.timeout) {
             socket.setTimeout(this.timeout);
         }
-
-        socket.connect(
-            this.port,
-            this.ip
-        );
 
         return socket;
     }
